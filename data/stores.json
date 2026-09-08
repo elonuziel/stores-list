@@ -1,0 +1,504 @@
+{
+  "metadata": {
+    "title": "רשימת רשתות מכבדות - כרטיסי בהצדעה",
+    "source": "https://www.behatsdaa.org.il/card/chargingCard",
+    "last_updated": "2026-09-08T13:45:00Z",
+    "total_stores": 25,
+    "available_cards": [
+      { "id": "card-gold", "name": "כרטיס בהצדעה זהב", "discount_default": "20%" },
+      { "id": "card-silver", "name": "כרטיס בהצדעה כסף", "discount_default": "15%" },
+      { "id": "card-digital", "name": "כרטיס דיגיטלי נטען", "discount_default": "17%" },
+      { "id": "card-lifestyle", "name": "כרטיס סגנון ופנאי", "discount_default": "18%" }
+    ],
+    "categories": [
+      "הכל",
+      "אופנה והנעלה",
+      "מזון, מסעדות ובתי קפה",
+      "פנאי, תרבות וספורט",
+      "בית, חשמל ועיצוב",
+      "פארם, יופי ובריאות",
+      "ספרים ופנאי"
+    ]
+  },
+  "stores": [
+    {
+      "id": "fox-group",
+      "name": "קבוצת פוקס (FOX)",
+      "category": "אופנה והנעלה",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Fox-wizel-logo.svg/320px-Fox-wizel-logo.svg.png",
+      "website": "https://www.fox.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "כולל כפל מבצעים. לא תקף בסניפי עודפים."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "15%",
+          "notes": "כולל כפל מבצעים. לא תקף בסניפי עודפים."
+        },
+        {
+          "card_id": "card-digital",
+          "card_name": "כרטיס דיגיטלי נטען",
+          "discount": "17%",
+          "notes": "תקף גם באתר טרמינל X."
+        }
+      ],
+      "conditions": "כולל כפל מבצעים, תקף בכל רשתות הקבוצה (פוקס, פוקס הום, מנגו, אמריקן איגל). אינו תקף בחנויות עודפים ובאתרי סחר למעט טרמינל איקס בכרטיס דיגיטלי."
+    },
+    {
+      "id": "shufersal",
+      "name": "שופרסל (שלי / דיל / אקספרס)",
+      "category": "מזון, מסעדות ובתי קפה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/8/87/Shufersal_logo_2021.svg/320px-Shufersal_logo_2021.svg.png",
+      "website": "https://www.shufersal.co.il",
+      "max_discount": 15,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "15%",
+          "notes": "תקף בסניפי שופרסל שלי, דיל ואקספרס. לא תקף באתר שופרסל אונליין."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "10%",
+          "notes": "תקף בסניפים בלבד."
+        }
+      ],
+      "conditions": "לא כולל מוצרי טבק ומוצרים בפיקוח ממשלתי. לא תקף ברכישה באתר שופרסל אונליין."
+    },
+    {
+      "id": "super-pharm",
+      "name": "סופר-פארם",
+      "category": "פארם, יופי ובריאות",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/9/90/Super-Pharm_Logo.svg/320px-Super-Pharm_Logo.svg.png",
+      "website": "https://shop.super-pharm.co.il",
+      "max_discount": 17,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "17%",
+          "notes": "כולל תרופות ללא מרשם, קוסמטיקה ומוצרי טואלטיקה."
+        },
+        {
+          "card_id": "card-digital",
+          "card_name": "כרטיס דיגיטלי נטען",
+          "discount": "15%",
+          "notes": "תקף בסניפים ובאתר סופר-פארם אונליין."
+        }
+      ],
+      "conditions": "לא תקף על תרופות מרשם. לא תקף בסניפי נתב\"ג."
+    },
+    {
+      "id": "castro",
+      "name": "קסטרו (Castro)",
+      "category": "אופנה והנעלה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/3/30/Castro_Model_logo.svg/320px-Castro_Model_logo.svg.png",
+      "website": "https://www.castro.com",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "כולל כפל מבצעים והנחות סוף עונה."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "15%",
+          "notes": "כולל כפל מבצעים."
+        },
+        {
+          "card_id": "card-lifestyle",
+          "card_name": "כרטיס סגנון ופנאי",
+          "discount": "18%",
+          "notes": "כולל קסטרו HOME."
+        }
+      ],
+      "conditions": "כולל כפל מבצעים. לא תקף בחנויות עודפים ובאתר האינטרנט."
+    },
+    {
+      "id": "aroma-israel",
+      "name": "ארומה אספרסו בר",
+      "category": "מזון, מסעדות ובתי קפה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/f/f7/Aroma_Espresso_Bar_logo.svg/320px-Aroma_Espresso_Bar_logo.svg.png",
+      "website": "https://www.aroma.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "תקף בכל סניפי ארומה ברחבי הארץ."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "15%",
+          "notes": "תקף בסניפים בישיבה ו-Takeaway."
+        }
+      ],
+      "conditions": "אינו תקף בסניפי נתב\"ג ובמשלוחים."
+    },
+    {
+      "id": "ace",
+      "name": "אייס (ACE) ואוטודיפו",
+      "category": "בית, חשמל ועיצוב",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/8/85/Ace_AutoDepot_logo.svg/320px-Ace_AutoDepot_logo.svg.png",
+      "website": "https://www.ace.co.il",
+      "max_discount": 18,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "18%",
+          "notes": "תקף בסניפי ACE ואוטודיפו."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "12%",
+          "notes": "תקף בסניפים."
+        }
+      ],
+      "conditions": "לא תקף על מוצרי חשמל לבנים, מוצרי אלקטרוניקה כבדים, ורכישות באתר אונליין."
+    },
+    {
+      "id": "steimatzky",
+      "name": "סטימצקי",
+      "category": "ספרים ופנאי",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/f/f2/Steimatzky_Logo.svg/320px-Steimatzky_Logo.svg.png",
+      "website": "https://www.steimatzky.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "כולל ספרים, צעצועים, ומשחקי קופסה."
+        },
+        {
+          "card_id": "card-lifestyle",
+          "card_name": "כרטיס סגנון ופנאי",
+          "discount": "18%",
+          "notes": "תקף בכל הסניפים."
+        }
+      ],
+      "conditions": "לא כולל ספרי לימוד, עיתונים וכתבי עת. לא תקף בסניפי נתב\"ג."
+    },
+    {
+      "id": "renuar",
+      "name": "רנואר (Renuar)",
+      "category": "אופנה והנעלה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/5/52/Renuar_logo.svg/320px-Renuar_logo.svg.png",
+      "website": "https://www.renuar.co.il",
+      "max_discount": 22,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "22%",
+          "notes": "כולל כפל מבצעים."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "17%",
+          "notes": "כולל כפל מבצעים."
+        },
+        {
+          "card_id": "card-lifestyle",
+          "card_name": "כרטיס סגנון ופנאי",
+          "discount": "18%",
+          "notes": "תקף גם ברשת TWENTYFOURSEVEN."
+        }
+      ],
+      "conditions": "כולל כפל מבצעים. לא תקף בחנויות עודפים."
+    },
+    {
+      "id": "mcdonalds-il",
+      "name": "מקדונלד'ס ישראל",
+      "category": "מזון, מסעדות ובתי קפה",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/320px-McDonald%27s_Golden_Arches.svg.png",
+      "website": "https://www.mcdonalds.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "תקף בדלפק ובמכשירי ההזמנה העצמית."
+        },
+        {
+          "card_id": "card-digital",
+          "card_name": "כרטיס דיגיטלי נטען",
+          "discount": "15%",
+          "notes": "תקף גם באפליקציית מקדונלדס."
+        }
+      ],
+      "conditions": "אינו תקף במשלוחים ובסניפי נתב\"ג."
+    },
+    {
+      "id": "kravitz",
+      "name": "קרביץ (Kravitz)",
+      "category": "ספרים ופנאי",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/8/87/Kravitz_Logo.svg/320px-Kravitz_Logo.svg.png",
+      "website": "https://www.kravitz.co.il",
+      "max_discount": 17,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "17%",
+          "notes": "כולל כלי כתיבה, ציוד משרדי וגאדג'טים."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "12%",
+          "notes": "תקף בסניפים."
+        }
+      ],
+      "conditions": "לא כולל מוצרי אפל (Apple), מחשבים ניידים וקונסולות משחק."
+    },
+    {
+      "id": "home-center",
+      "name": "הום סנטר",
+      "category": "בית, חשמל ועיצוב",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/8/8f/Home_Center_Logo.svg/320px-Home_Center_Logo.svg.png",
+      "website": "https://www.homecenter.co.il",
+      "max_discount": 18,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "18%",
+          "notes": "תקף בכל מחלקות הרשת."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "14%",
+          "notes": "תקף בסניפים."
+        }
+      ],
+      "conditions": "אינו תקף ברכישות סיטונאיות, הובלות והרכבות."
+    },
+    {
+      "id": "opticana",
+      "name": "אופטיקנה (Opticana)",
+      "category": "פארם, יופי ובריאות",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/7/7b/Opticana_Logo.svg/320px-Opticana_Logo.svg.png",
+      "website": "https://www.opticana.co.il",
+      "max_discount": 25,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "25%",
+          "notes": "כולל משקפי שמש ומסגרות ראייה."
+        },
+        {
+          "card_id": "card-lifestyle",
+          "card_name": "כרטיס סגנון ופנאי",
+          "discount": "20%",
+          "notes": "כולל בדיקות ראייה."
+        }
+      ],
+      "conditions": "לא תקף על עדשות מגע ותמיסות במבצעי כמות."
+    },
+    {
+      "id": "mega-in-city",
+      "name": "מגה בעיר / ביתן אונליין",
+      "category": "מזון, מסעדות ובתי קפה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/b/b8/Mega_BaIr_Logo.svg/320px-Mega_BaIr_Logo.svg.png",
+      "website": "https://www.ybitan.co.il",
+      "max_discount": 15,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "15%",
+          "notes": "תקף בסניפי מגה בעיר וקרפור."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "10%",
+          "notes": "תקף בסניפים בלבד."
+        }
+      ],
+      "conditions": "לא כולל סיגריות ומוצרים בפיקוח מחירים."
+    },
+    {
+      "id": "golf-group",
+      "name": "קבוצת גולף (GOLF & CO)",
+      "category": "בית, חשמל ועיצוב",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/2/22/Golf_%26_Co_logo.svg/320px-Golf_%26_Co_logo.svg.png",
+      "website": "https://www.golfco.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "תקף בגולף, גולף אנד קו, פולגת ואינטימה."
+        },
+        {
+          "card_id": "card-lifestyle",
+          "card_name": "כרטיס סגנון ופנאי",
+          "discount": "18%",
+          "notes": "כולל כפל מבצעים עד 50% הנחה."
+        }
+      ],
+      "conditions": "לא תקף בסניפי עודפים ובאתר האינטרנט."
+    },
+    {
+      "id": "mega-sport",
+      "name": "מגה ספורט (Mega Sport)",
+      "category": "פנאי, תרבות וספורט",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/9/91/Mega_Sport_logo.svg/320px-Mega_Sport_logo.svg.png",
+      "website": "https://megasport.co.il",
+      "max_discount": 22,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "22%",
+          "notes": "תקף על כל מותגי הספורט המובילים."
+        },
+        {
+          "card_id": "card-lifestyle",
+          "card_name": "כרטיס סגנון ופנאי",
+          "discount": "18%",
+          "notes": "כולל נעלי ריצה ואימון."
+        }
+      ],
+      "conditions": "לא תקף על שעוני דופק (Garmin/Polar), מכשירי כושר כבדים ובסניפי עודפים."
+    },
+    {
+      "id": "cafe-cafe",
+      "name": "קפה קפה",
+      "category": "מזון, מסעדות ובתי קפה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/c/cd/Cafe_Cafe_Logo.svg/320px-Cafe_Cafe_Logo.svg.png",
+      "website": "https://www.cafecafe.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "תקף בישיבה בסניפי הרשת."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "15%",
+          "notes": "תקף בישיבה וטייק אווי."
+        }
+      ],
+      "conditions": "לא כולל ארוחות עסקיות, אירועים ומשלוחים."
+    },
+    {
+      "id": "h-and-o",
+      "name": "H&O",
+      "category": "אופנה והנעלה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/d/d7/H%26O_Logo.svg/320px-H%26O_Logo.svg.png",
+      "website": "https://h-o.co.il",
+      "max_discount": 25,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "25%",
+          "notes": "כולל אופנה, כלי בית והנעלה."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "20%",
+          "notes": "כולל כפל מבצעים."
+        }
+      ],
+      "conditions": "לא תקף במחלקת אלקטרוניקה ובקנייה בסיטונאות."
+    },
+    {
+      "id": "stimatzky-tzomet",
+      "name": "צומת ספרים",
+      "category": "ספרים ופנאי",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/9/91/Tzomet_Sfarim_logo.svg/320px-Tzomet_Sfarim_logo.svg.png",
+      "website": "https://www.booknet.co.il",
+      "max_discount": 20,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "20%",
+          "notes": "תקף בכל סניפי צומת ספרים."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "15%",
+          "notes": "תקף בסניפים."
+        }
+      ],
+      "conditions": "לא תקף על ספרי לימוד ומבצעי 4 ב-100 ייעודיים."
+    },
+    {
+      "id": "landwer",
+      "name": "קפה לנדוור",
+      "category": "מזון, מסעדות ובתי קפה",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/2/23/Cafe_Landwer_Logo.svg/320px-Cafe_Landwer_Logo.svg.png",
+      "website": "https://www.landwer.co.il",
+      "max_discount": 18,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "18%",
+          "notes": "תקף בכל סניפי קפה לנדוור."
+        },
+        {
+          "card_id": "card-digital",
+          "card_name": "כרטיס דיגיטלי נטען",
+          "discount": "15%",
+          "notes": "תקף בישיבה במסעדה."
+        }
+      ],
+      "conditions": "אינו תקף בעסקיות צהריים ובמשלוחים."
+    },
+    {
+      "id": "machsaney-hashmal",
+      "name": "מחסני חשמל",
+      "category": "בית, חשמל ועיצוב",
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/4/4e/Mahsanei_Hashmal_Logo.svg/320px-Mahsanei_Hashmal_Logo.svg.png",
+      "website": "https://www.payngo.co.il",
+      "max_discount": 15,
+      "cards": [
+        {
+          "card_id": "card-gold",
+          "card_name": "כרטיס בהצדעה זהב",
+          "discount": "15%",
+          "notes": "תקף בסניפי הרשת."
+        },
+        {
+          "card_id": "card-silver",
+          "card_name": "כרטיס בהצדעה כסף",
+          "discount": "10%",
+          "notes": "תקף בסניפים."
+        }
+      ],
+      "conditions": "לא כולל סלולר של אפל (iPhone), כרטיסי מתנה ומוצרים במבצעי אילת."
+    }
+  ]
+}
+

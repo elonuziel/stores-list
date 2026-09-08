@@ -1,0 +1,93 @@
+/* Custom styling & RTL Hebrew enhancements */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&family=Heebo:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-main: 'Rubik', 'Heebo', system-ui, -apple-system, sans-serif;
+  --primary: #1e40af;
+  --primary-hover: #1d4ed8;
+  --gold: #d97706;
+}
+
+body {
+  font-family: var(--font-main);
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism subtle effect */
+.glass-header {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.dark .glass-header {
+  background: rgba(15, 23, 42, 0.90);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Chips horizontal scroll hide bar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Card hover transitions */
+.store-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.store-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Hebrew discount badge glow */
+.badge-discount-gold {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.25);
+}
+
+.badge-discount-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.25);
+}
+
+/* Modal animation */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-content {
+  animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
