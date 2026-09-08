@@ -17,6 +17,13 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urljoin, parse_qs, urlparse
 
+# Ensure UTF-8 stdout encoding on Windows
+if sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 # Load .env if present
 try:
     from dotenv import load_dotenv
@@ -40,7 +47,7 @@ def parse_arguments():
         "--headless",
         action="store_true",
         default=False,
-        help="Run browser in headless mode (default: False, headful is more reliable against Incapsula)"
+        help="Run browser in headless mode (default: False, headful required for login & WAF)"
     )
     parser.add_argument(
         "--card-url",
@@ -48,10 +55,27 @@ def parse_arguments():
         help="Main cards page URL"
     )
     parser.add_argument(
+        "--browser", "--channel",
+        dest="browser",
+        choices=["chrome", "msedge", "edge", "chromium"],
+        default="chrome",
+        help="Browser to use: 'chrome' (Google Chrome, default), 'edge' / 'msedge' (Microsoft Edge), or 'chromium'"
+    )
+    parser.add_argument(
+        "--cdp",
+        default=None,
+        help="Connect to an already open browser via Chrome DevTools Protocol port or URL (e.g. 9222 or http://localhost:9222)"
+    )
+    parser.add_argument(
         "--timeout",
         type=int,
         default=60000,
         help="Navigation timeout in milliseconds (default: 60000)"
+    )
+    parser.add_argument(
+        "--profile-dir",
+        default="./behatsdaa_profile",
+        help="Directory to store persistent browser profile and login session (default: ./behatsdaa_profile)"
     )
     return parser.parse_args()
 
@@ -66,7 +90,6 @@ def extract_discount_percent(text):
             return int(float(match.group(1)))
         except ValueError:
             pass
-    # Fallback search for standalone numbers
     match = re.search(r'(\d+)', text)
     if match:
         val = int(match.group(1))
@@ -75,7 +98,7 @@ def extract_discount_percent(text):
     return 0
 
 
-def call_groq_enhancement(stores, categories):
+def call_groq_enhancement(stores):
     """
     Optional Groq LLM integration to clean up categories, standardize Hebrew terms,
     and resolve unclassified stores.
@@ -138,6 +161,156 @@ def call_groq_enhancement(stores, categories):
     return stores
 
 
+def launch_stealth_context(p, profile_dir, headless=False, channel=None):
+    """
+    Launch persistent Chromium context with stealth flags to bypass Incapsula WAF.
+    Persists cookies and login session so user only has to log in once.
+    """
+    profile_path = Path(profile_dir).resolve()
+    profile_path.mkdir(parents=True, exist_ok=True)
+
+    launch_args = [
+        "--disable-blink-features=AutomationControlled",
+        "--no-sandbox",
+        "--disable-infobars"
+    ]
+    channels = [channel] if channel else ["chrome", "msedge", None]
+
+    for ch in channels:
+        try:
+            kwargs = {
+                "user_data_dir": str(profile_path),
+                "headless": headless,
+                "args": launch_args,
+                "ignore_default_args": ["--enable-automation"],
+                "locale": "he-IL",
+                "timezone_id": "Asia/Jerusalem",
+                "viewport": {"width": 1400, "height": 900}
+            }
+            if ch:
+                kwargs["channel"] = ch
+                print(f"[*] Launching persistent browser using channel '{ch}'...")
+            else:
+                print("[*] Launching persistent browser using bundled Chromium...")
+
+            context = p.chromium.launch_persistent_context(**kwargs)
+            return context
+        except Exception as e:
+            msg = str(e).split('\n')[0]
+            if ch:
+                print(f"[*] Channel '{ch}' not available ({msg}), trying next option...")
+            else:
+                print(f"[!] Bundled Chromium launch failed: {msg}")
+
+    raise RuntimeError(
+        "Could not launch any browser! Please run:\n"
+        "    playwright install chromium\n"
+        "or ensure Google Chrome / Microsoft Edge is installed."
+    )
+
+
+def wait_for_user_login(page):
+    """Detect if page redirected to /login and wait for user authentication."""
+    if "/login" in page.url:
+        print("\n" + "=" * 65)
+        print(" [!] ACTION REQUIRED: Behatsdaa Login Needed")
+        print("=" * 65)
+        print(" Behatsdaa requires logging in to access cards and participating stores.")
+        print(" -> Please log in (ID + SMS code) in the opened Chrome window.")
+        print(" -> The scraper will automatically resume once you are logged in.")
+        print("=" * 65 + "\n")
+
+        try:
+            # Wait up to 3 minutes for user to complete login
+            page.wait_for_url(lambda u: "/login" not in u, timeout=180000)
+            print("[+] Login detected successfully! Resuming scrape...")
+        except Exception:
+            print("[!] Timed out waiting for login. Proceeding with current page...")
+
+
+def extract_stores_from_view(target, intercepted_api_data, wallet_id=None):
+    """Extract stores from intercepted network JSON APIs or from DOM elements."""
+    stores_found = []
+
+    # 1. Try intercepted API responses
+    for url, json_data in list(intercepted_api_data.items()):
+        if (wallet_id and wallet_id in url) or "shops" in url.lower() or "stores" in url.lower() or "wallet" in url.lower():
+            items = []
+            if isinstance(json_data, list):
+                items = json_data
+            elif isinstance(json_data, dict):
+                for k in ["data", "shops", "stores", "items", "result", "rows"]:
+                    if k in json_data and isinstance(json_data[k], list):
+                        items = json_data[k]
+                        break
+            if items:
+                for itm in items:
+                    if isinstance(itm, dict):
+                        name = itm.get("name") or itm.get("shopName") or itm.get("title")
+                        if name:
+                            stores_found.append({
+                                "name": name.strip(),
+                                "category": itm.get("category") or itm.get("categoryName") or "כללי",
+                                "logo": itm.get("logo") or itm.get("logoUrl") or itm.get("imageUrl") or "",
+                                "discount": str(itm.get("discount") or itm.get("discountPercent") or "הנחת מועדון"),
+                                "conditions": itm.get("conditions") or itm.get("notes") or "",
+                                "website": itm.get("website") or itm.get("url") or ""
+                            })
+                if stores_found:
+                    return stores_found
+
+    # 2. Extract from DOM elements
+    try:
+        if hasattr(target, "mouse"):
+            for _ in range(6):
+                target.mouse.wheel(0, 1000)
+                time.sleep(0.3)
+    except Exception:
+        pass
+
+    dom_elements = target.locator("div[class*='shop'], div[class*='store'], div[class*='card'], .shop-item, .store-item").all()
+    for el in dom_elements:
+        try:
+            text = el.inner_text().strip()
+            if not text or len(text) < 3:
+                continue
+            lines = [l.strip() for l in text.split("\n") if l.strip()]
+            if not lines:
+                continue
+
+            store_name = lines[0]
+            category = "כללי"
+            discount = "הנחה"
+            notes = ""
+
+            for l in lines:
+                if "%" in l or "הנחה" in l:
+                    discount = l
+                if any(cat_word in l for cat_word in ["אופנה", "מזון", "מסעדות", "בית", "פארם", "ספרים", "ספורט", "נופש", "חשמל"]):
+                    category = l
+
+            img_el = el.locator("img").first
+            logo_url = ""
+            try:
+                if img_el.count() > 0:
+                    logo_url = img_el.get_attribute("src") or ""
+            except Exception:
+                pass
+
+            stores_found.append({
+                "name": store_name,
+                "category": category,
+                "logo": logo_url,
+                "discount": discount,
+                "conditions": notes,
+                "website": ""
+            })
+        except Exception:
+            continue
+
+    return stores_found
+
+
 def scrape_with_playwright(args):
     try:
         from playwright.sync_api import sync_playwright
@@ -153,35 +326,52 @@ def scrape_with_playwright(args):
     intercepted_api_data = {}
 
     print("==========================================================")
-    print("      בהצדעה - סורק רשתות מכבדות לכל סוגי הכרטיסים       ")
+    print("      Behatsdaa - Multi-Card Stores Scraper               ")
     print("==========================================================")
-    print(f"[*] Main URL: {args.card_url}")
+    print(f"[*] Target URL: {args.card_url}")
     print(f"[*] Headless: {args.headless}")
+    if args.cdp:
+        print(f"[*] Mode: Connect to existing open browser (CDP: {args.cdp})")
+    else:
+        print(f"[*] Browser: {args.browser}")
+        print(f"[*] Profile Directory: {args.profile_dir}")
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(
-            headless=args.headless,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--start-maximized"
-            ]
-        )
+        if args.cdp:
+            endpoint = args.cdp if str(args.cdp).startswith("http") else f"http://localhost:{args.cdp}"
+            print(f"[*] Connecting to your existing open browser over CDP: {endpoint} ...")
+            browser = p.chromium.connect_over_cdp(endpoint)
+            context = browser.contexts[0] if browser.contexts else browser.new_context()
+        else:
+            browser_channel = args.browser.lower()
+            if browser_channel in ["edge", "msedge"]:
+                browser_channel = "msedge"
+            elif browser_channel == "chromium":
+                browser_channel = None
+            else:
+                browser_channel = "chrome"
 
-        context = browser.new_context(
-            viewport={"width": 1440, "height": 900},
-            locale="he-IL",
-            timezone_id="Asia/Jerusalem",
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-        )
+            context = launch_stealth_context(
+                p,
+                profile_dir=args.profile_dir,
+                headless=args.headless,
+                channel=browser_channel
+            )
 
-        page = context.new_page()
+        page = context.pages[0] if context.pages else context.new_page()
 
-        # Listen to network responses to capture internal JSON APIs
+        # Hide webdriver flag
+        page.add_init_script("""
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            });
+        """)
+
+        # Intercept store/card JSON responses
         def handle_response(response):
             try:
                 url = response.url
-                if ("api" in url.lower() or "shops" in url.lower() or "wallet" in url.lower()) and "json" in response.headers.get("content-type", ""):
+                if ("api" in url.lower() or "shops" in url.lower() or "wallet" in url.lower() or "card" in url.lower()) and "json" in response.headers.get("content-type", ""):
                     try:
                         data = response.json()
                         intercepted_api_data[url] = data
@@ -192,30 +382,27 @@ def scrape_with_playwright(args):
 
         page.on("response", handle_response)
 
-        # 1. Navigate to main Charging Cards page
-        print(f"\n[1/3] Navigating to chargingCard page: {args.card_url}")
+        # 1. Navigate to main chargingCard page
+        print(f"\n[1/3] Navigating to: {args.card_url}")
         try:
             page.goto(args.card_url, wait_until="networkidle", timeout=args.timeout)
         except Exception as e:
-            print(f"[!] Warning on navigation: {e}")
+            print(f"[*] Navigation note: {e}")
 
-        # Wait for content or Incapsula challenge resolution
-        print("[*] Waiting for cards content to load...")
-        time.sleep(4)
+        # Check for login requirement
+        wait_for_user_login(page)
+
+        time.sleep(3)
 
         # Extract all card links / wallets
-        # Look for buttons/links containing 'shops', 'walletId', or text matching 'רשתות מכבדות'
         card_links = page.locator("a[href*='walletId'], a[href*='shops'], button:has-text('רשתות'), a:has-text('רשתות')").all()
-        print(f"[*] Located {len(card_links)} candidate shop links/buttons.")
+        print(f"[*] Located {len(card_links)} candidate shop buttons/links on cards page.")
 
         card_targets = []
         for link in card_links:
             try:
                 href = link.get_attribute("href") or ""
-                text = link.inner_text().strip()
                 parent_text = link.locator("xpath=../..").inner_text().strip()
-                
-                # Extract card name from parent container or link
                 lines = [l.strip() for l in parent_text.split("\n") if l.strip()]
                 card_name = lines[0] if lines else "כרטיס בהצדעה"
 
@@ -232,9 +419,8 @@ def scrape_with_playwright(args):
             except Exception:
                 continue
 
-        # If no direct links found, inspect page links and wallet query parameters
+        # Check page HTML for wallet IDs if no links matched
         if not card_targets:
-            print("[*] Checking page source for wallet IDs...")
             content = page.content()
             wallet_matches = re.findall(r'walletId[=:]\s*["\']?(\d+)["\']?', content)
             unique_wallets = list(dict.fromkeys(wallet_matches))
@@ -245,7 +431,7 @@ def scrape_with_playwright(args):
                     "url": f"https://www.behatsdaa.org.il/card/shops?walletId={wid}"
                 })
 
-        # Ensure at least wallet 3379 (user mentioned) is present
+        # Ensure default wallet 3379 is included
         wallet_ids = [c["wallet_id"] for c in card_targets]
         if "3379" not in wallet_ids:
             card_targets.append({
@@ -254,7 +440,7 @@ def scrape_with_playwright(args):
                 "url": "https://www.behatsdaa.org.il/card/shops?walletId=3379"
             })
 
-        print(f"[+] Found {len(card_targets)} card targets to scrape:")
+        print(f"[+] Found {len(card_targets)} card target(s) to scrape:")
         for idx, ct in enumerate(card_targets, 1):
             print(f"    {idx}. {ct['card_name']} (walletId: {ct['wallet_id']})")
             discovered_cards.append({
@@ -264,115 +450,53 @@ def scrape_with_playwright(args):
                 "url": ct["url"]
             })
 
-        # 2. Iterate each card and scrape its participating stores
-        print("\n[2/3] Scraping participating stores for each card...")
-        for ct in card_targets:
+        # 2. Scrape stores for each card
+        print(f"\n[2/3] Scraping participating stores for each card...")
+        for idx, ct in enumerate(card_targets, 1):
             card_id = f"card-{ct['wallet_id']}"
             card_name = ct["card_name"]
             card_url = ct["url"]
 
-            print(f"\n[*] Loading stores for: {card_name} -> {card_url}")
-            try:
-                page.goto(card_url, wait_until="networkidle", timeout=args.timeout)
-                time.sleep(3)
-            except Exception as err:
-                print(f"[!] Error loading {card_url}: {err}")
-                continue
+            print(f"\n[*] [{idx}/{len(card_targets)}] Loading stores for: {card_name} (walletId: {ct['wallet_id']})")
 
-            # Check if internal API provided data for this wallet
-            stores_found = []
-            for url, json_data in intercepted_api_data.items():
-                if ct["wallet_id"] in url or "shops" in url or "stores" in url:
-                    items = []
-                    if isinstance(json_data, list):
-                        items = json_data
-                    elif isinstance(json_data, dict):
-                        for k in ["data", "shops", "stores", "items", "result"]:
-                            if k in json_data and isinstance(json_data[k], list):
-                                items = json_data[k]
-                                break
-                    if items:
-                        for itm in items:
-                            if isinstance(itm, dict):
-                                name = itm.get("name") or itm.get("shopName") or itm.get("title")
-                                if name:
-                                    stores_found.append({
-                                        "name": name.strip(),
-                                        "category": itm.get("category") or itm.get("categoryName") or "כללי",
-                                        "logo": itm.get("logo") or itm.get("logoUrl") or itm.get("imageUrl") or "",
-                                        "discount": itm.get("discount") or itm.get("discountPercent") or "הנחת מועדון",
-                                        "conditions": itm.get("conditions") or itm.get("notes") or "",
-                                        "website": itm.get("website") or itm.get("url") or ""
-                                    })
-                        if stores_found:
-                            print(f"[+] Extracted {len(stores_found)} stores from API response!")
-                            break
+            # Try clicking the "Participating Stores" button on the cards page
+            clicked = False
+            if "chargingCard" in page.url:
+                try:
+                    btn = page.locator(f"a[href*='walletId={ct['wallet_id']}'], button:has-text('רשתות'), a:has-text('רשתות'), button:has-text('מכבדות'), a:has-text('מכבדות')").first
+                    if btn.count() > 0 and btn.is_visible():
+                        print(f"[*] Clicking 'Participating Stores' button for {card_name}...")
+                        btn.scroll_into_view_if_needed()
+                        time.sleep(0.5)
+                        btn.click()
+                        time.sleep(3)
+                        clicked = True
+                except Exception as e:
+                    print(f"[*] Note on button click: {e}")
 
-            # If API did not yield stores, parse DOM elements
-            if not stores_found:
-                print("[*] Parsing store cards from DOM...")
-                # Scroll down to trigger lazy loading
-                for _ in range(5):
-                    page.mouse.wheel(0, 1000)
-                    time.sleep(0.5)
+            # If not navigated by click, navigate directly to card_url
+            if not clicked or "shops" not in page.url:
+                try:
+                    page.goto(card_url, wait_until="networkidle", timeout=args.timeout)
+                except Exception as err:
+                    print(f"[*] Navigation note: {err}")
 
-                # Look for store elements / tiles
-                store_selectors = [
-                    ".shop-card", ".store-item", ".shop-item", "[class*='shop']", "[class*='store']",
-                    ".card", "div.col-12", "div.col-md-4", "div.col-sm-6"
-                ]
-                
-                dom_elements = []
-                for sel in store_selectors:
-                    els = page.locator(sel).all()
-                    if len(els) >= 3:
-                        dom_elements = els
-                        break
+            # Check if login is required
+            wait_for_user_login(page)
+            time.sleep(3)
 
-                for el in dom_elements:
-                    try:
-                        text = el.inner_text().strip()
-                        if not text or len(text) < 3:
-                            continue
-                        lines = [l.strip() for l in text.split("\n") if l.strip()]
-                        if not lines:
-                            continue
-                        
-                        store_name = lines[0]
-                        category = "כללי"
-                        discount = "הנחה"
-                        notes = ""
+            stores_found = extract_stores_from_view(page, intercepted_api_data, wallet_id=ct['wallet_id'])
+            print(f"[+] Extracted {len(stores_found)} stores for '{card_name}'.")
 
-                        # Extract discount percentage if present
-                        for l in lines:
-                            if "%" in l or "הנחה" in l:
-                                discount = l
-                            if any(cat_word in l for cat_word in ["אופנה", "מזון", "מסעדות", "בית", "פארם", "ספרים", "ספורט", "נופש"]):
-                                category = l
+            # Return to chargingCard if needed for next card
+            if idx < len(card_targets) and "chargingCard" not in page.url:
+                try:
+                    page.goto(args.card_url, wait_until="networkidle", timeout=args.timeout)
+                    time.sleep(2)
+                except Exception:
+                    pass
 
-                        # Extract image/logo if available
-                        img_el = el.locator("img").first
-                        logo_url = ""
-                        try:
-                            if img_el.count() > 0:
-                                logo_url = img_el.get_attribute("src") or ""
-                        except Exception:
-                            pass
-
-                        stores_found.append({
-                            "name": store_name,
-                            "category": category,
-                            "logo": logo_url,
-                            "discount": discount,
-                            "conditions": notes,
-                            "website": ""
-                        })
-                    except Exception:
-                        continue
-
-            print(f"[+] Total stores extracted for '{card_name}': {len(stores_found)}")
-
-            # Merge stores into unified map
+            # Merge into unified catalog
             for s in stores_found:
                 sname = s["name"]
                 if sname not in all_scraped_stores:
@@ -387,7 +511,6 @@ def scrape_with_playwright(args):
                         "max_discount": 0
                     }
 
-                # Add card membership
                 disc_num = extract_discount_percent(s.get("discount", ""))
                 all_scraped_stores[sname]["cards"].append({
                     "card_id": card_id,
@@ -400,36 +523,29 @@ def scrape_with_playwright(args):
                 if disc_num > all_scraped_stores[sname]["max_discount"]:
                     all_scraped_stores[sname]["max_discount"] = disc_num
 
-        browser.close()
+        context.close()
 
-    # Convert dictionary to list
     final_stores_list = list(all_scraped_stores.values())
-    print(f"\n[+] Total unique stores across all cards: {len(final_stores_list)}")
+    print(f"\n[+] Total unique stores scraped across all cards: {len(final_stores_list)}")
 
-    # If scrape extracted 0 stores (e.g. WAF block during automated run), fall back to existing data
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "stores.json"
     csv_path = output_dir / "stores.csv"
 
     if not final_stores_list:
-        print("[!] No stores could be parsed from live session (possible WAF block or page structure change).")
+        print("[!] No stores could be extracted during live session.")
         if json_path.exists():
             print(f"[*] Preserving existing {json_path} without overwriting.")
-            return
-        else:
-            print("[!] Generating template data for testing.")
-            return
+        return
 
-    # 3. Groq LLM Enhancement (Optional)
-    final_stores_list = call_groq_enhancement(final_stores_list, [])
+    # 3. Optional Groq Enhancement
+    final_stores_list = call_groq_enhancement(final_stores_list)
 
-    # Extract all distinct categories
     all_categories = sorted(list({s.get("category", "כללי") for s in final_stores_list if s.get("category")}))
     if "הכל" not in all_categories:
         all_categories.insert(0, "הכל")
 
-    # Build output payload
     output_payload = {
         "metadata": {
             "title": "רשימת רשתות מכבדות - כרטיסי בהצדעה",
@@ -442,12 +558,10 @@ def scrape_with_playwright(args):
         "stores": final_stores_list
     }
 
-    # Save data/stores.json
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(output_payload, f, ensure_ascii=False, indent=2)
     print(f"[+] Saved JSON catalog to: {json_path}")
 
-    # Save data/stores.csv
     with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([
@@ -472,7 +586,7 @@ def scrape_with_playwright(args):
                 s.get("conditions", "")
             ])
     print(f"[+] Saved CSV catalog to: {csv_path}")
-    print("\n[SUCCESS] Scraping and catalog export finished successfully!")
+    print("\n[SUCCESS] Scraping completed successfully!")
 
 
 def main():
@@ -482,4 +596,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

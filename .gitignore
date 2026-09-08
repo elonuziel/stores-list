@@ -2,6 +2,8 @@
 .env
 .env*.local
 .env.example
+behatsdaa_profile/
+chrome_profile/
 
 # Python artifacts
 __pycache__/
