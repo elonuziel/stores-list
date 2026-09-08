@@ -89,7 +89,7 @@
   // Fetch store data
   async function loadData() {
     try {
-      const response = await fetch('data/stores.json');
+      const response = await fetch(`data/stores.json?t=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error('Network response was not ok');
       storeData = await response.json();
     } catch (err) {
