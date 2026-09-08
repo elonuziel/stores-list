@@ -28,9 +28,6 @@ try:
 except ImportError:
     pass
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
-
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Scrape participating stores across all Behatsdaa cards.")
@@ -190,64 +187,6 @@ def merge_stores_into_catalog(catalog, stores, card_info):
             store_entry["website"] = s["website"]
 
 
-def call_groq_enhancement(stores):
-    """Optional Groq LLM integration for category enrichment."""
-    if not GROQ_API_KEY:
-        return stores
-
-    print(f"[*] GROQ_API_KEY detected. Running LLM enrichment with model {GROQ_MODEL}...")
-    try:
-        from groq import Groq
-        client = Groq(api_key=GROQ_API_KEY)
-
-        prompt = f"""
-אתה עוזר לסדר קטלוג חנויות של מועדון בהצדעה.
-להלן רשימת קטגוריות תקניות:
-- אופנה והנעלה
-- מזון, מסעדות ובתי קפה
-- בית, חשמל ועיצוב
-- פארם, יופי ובריאות
-- פנאי, תרבות וספורט
-- ספרים ופנאי
-- תיירות ונופש
-- כללי
-
-הנחיות:
-1. התאם לכל רשת את הקטגוריה המתאימה ביותר מהרשימה התקנית בלבד.
-2. נקה את שורת התנאים (אם קיימת) מתווים מיותרים.
-3. החזר אך ורק מערך JSON תקני של אובייקטים עם השדות: "name", "category", "clean_conditions"
-
-נתוני החנויות:
-{json.dumps([{"name": s["name"], "category": s.get("category", ""), "conditions": s.get("conditions", "")} for s in stores[:40]], ensure_ascii=False)}
-"""
-        completion = client.chat.completions.create(
-            model=GROQ_MODEL,
-            messages=[
-                {"role": "system", "content": "You are a Hebrew data processing expert. Reply only with valid JSON."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.2,
-            response_format={"type": "json_object"}
-        )
-
-        resp_content = completion.choices[0].message.content
-        data = json.loads(resp_content)
-        enhancements = data if isinstance(data, list) else (data.get("stores") or data.get("items") or data.get("data") or [])
-
-        if isinstance(enhancements, list):
-            lookup = {e.get("name"): e for e in enhancements if e.get("name")}
-            for s in stores:
-                if s["name"] in lookup:
-                    e = lookup[s["name"]]
-                    if e.get("category"):
-                        s["category"] = e["category"]
-                    if e.get("clean_conditions"):
-                        s["conditions"] = e["clean_conditions"]
-        print("[+] Groq enrichment completed successfully.")
-    except Exception as e:
-        print(f"[!] Groq enrichment encountered an error (continuing without LLM): {e}")
-
-    return stores
 
 
 def launch_stealth_context(p, profile_dir, headless=False, channel=None):
@@ -588,9 +527,6 @@ def scrape_with_playwright(args):
     if not final_stores_list:
         print("[!] No stores could be extracted during session.")
         return
-
-    # Optional Groq Enhancement
-    final_stores_list = call_groq_enhancement(final_stores_list)
 
     # Save to disk
     save_catalog(final_stores_list, discovered_cards, args.output_dir, args.card_url)

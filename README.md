@@ -1,107 +1,94 @@
-# רשימת רשתות מכבדות - כרטיסי בהצדעה 💳
+# Behatsdaa Participating Stores Multi-Card Catalog 💳
 
-אתר חיפוש וסינון מהיר של כל הרשתות, החנויות, המסעדות ובתי העסק המכבדים את כרטיסי מועדון **[בהצדעה](https://www.behatsdaa.org.il/card/chargingCard)** (כולל כרטיס זהב, כרטיס כסף, כרטיס דיגיטלי נטען וכרטיסי פנאי).
+> **Live Web Application:** [https://elonuziel.github.io/stores-list/](https://elonuziel.github.io/stores-list/)
 
-הפרויקט כולל:
-1. **סורק אוטומטי (Python + Playwright)**: מאתר באופן דינמי את כל סוגי הכרטיסים מתוך עמוד הכרטיסים הנטענים של בהצדעה, מחלץ את החנויות, אחוזי ההנחה והתנאים, ומאחד רשתות שמופיעות במספר כרטיסים.
-2. **אינטגרציית Groq AI (אופציונלית)**: ניקוי תנאי כפל מבצעים, תקנון קטגוריות וטיפול בטקסטים חופשיים בעזרת מודל שפה מהיר.
-3. **אתר אינטראקטיבי מהיר (GitHub Pages)**: ללא צורך ב-build או Node.js, תומך בעברית (RTL), חיפוש חכם ומטושטש (Fuzzy Search), סינון לפי סוג כרטיס וקטגוריות, תצוגת כרטיסים/טבלה ומצב כהה/בהיר.
+A fast, interactive web catalog and automated scraper for all stores, restaurants, fashion brands, and attractions participating in **[Behatsdaa](https://www.behatsdaa.org.il/card/chargingCard)** recharge cards (Club Cards, Fighter Card, Restaurants, Carrefour, Online Grocery, and Special Promotions).
 
 ---
 
-## 🚀 תכונות האתר
+## 🚀 Live Demo & Features
 
-- 🔍 **חיפוש חי בעברית**: התאמה גמישה לפי שם רשת, קטגוריה, או מילות מפתח (מנרמל אותיות סופיות וניקוד).
-- 💳 **סינון לפי סוג כרטיס**: אפשרות לבחור כרטיס ספציפי (למשל: "כרטיס בהצדעה זהב") או לצפות בכל הכרטיסים יחד.
-- 🏷️ **תגיות הנחה לכל כרטיס**: אם רשת משתתפת בכמה כרטיסים (למשל 20% בזהב ו-15% בכסף), כל ההנחות מוצגות בבירור.
-- 🗂️ **שבבי קטגוריות מהירים**: סינון בלחיצה אחת (אופנה, מזון ומסעדות, פארם, בית ועוד) עם מונה פריטים חי.
-- 📊 **תצוגת גריד וטבלה**: מעבר קל בין תצוגת כרטיסים מעוצבת לתצוגת טבלה קומפקטית.
-- 🌙 **מצב כהה / בהיר (Dark Mode)**: שמירה אוטומטית של העדפת המשתמש.
-- 📋 **ייצוא והורדה**: קישור מהיר להורדת הקטלוג כקובץ `stores.csv` לאקסל או `stores.json`.
+Explore the catalog live at: **[https://elonuziel.github.io/stores-list/](https://elonuziel.github.io/stores-list/)**
+
+- ⚡ **Ultra-Fast Search**: Real-time Hebrew search with diacritics and final-letter normalization (`ך/כ`, `ם/מ`, `ן/נ`, `ף/פ`, `ץ/צ`).
+- 💳 **8 Distinct Cards & Wallets**: Filter by specific cards or view all participating stores across every card.
+- 🏷️ **Accurate Multi-Card Discounts**: Clearly shows which cards are accepted at each brand and the exact discount rate for each (e.g. 30%, 20%, 18%, 15%, 10%, 7%).
+- 🗂️ **Dynamic Categories**: Instant category filtering (Restaurants, Fashion, Spas, Travel & Vacations, Home & Living, Culture, etc.) with dynamic store count badges.
+- 📊 **Dual Views**: Seamless toggle between responsive Grid Cards and compact Table View.
+- 🌙 **Dark & Light Themes**: Full dark mode support with automatic system preference detection and local persistence.
+- 📥 **Export Ready**: Download the complete catalog anytime as [stores.csv](data/stores.csv) (Excel-compatible UTF-8 BOM) or [stores.json](data/stores.json).
+- 🔒 **Zero External AI Dependencies**: 100% self-contained and accurate data extracted directly from Behatsdaa's official systems.
 
 ---
 
-## 📁 מבנה הפרויקט
+## 📁 Project Structure
 
 ```text
 stores-list/
-├── index.html           # אתר האינטרנט הראשי (GitHub Pages)
-├── styles.css           # עיצוב מותאם לעברית (RTL), אנימציות ומצב כהה
-├── app.js               # לוגיקת חיפוש, סינון והצגת נתונים
-├── scraper.py           # סורק Playwright לאיסוף כל הכרטיסים והרשתות
-├── requirements.txt     # תלויות פייתון
-├── .env.example         # תבנית משתני סביבה (למפתח Groq)
+├── index.html           # Main web application (GitHub Pages)
+├── styles.css           # Custom RTL styling, dark theme, and animations
+├── app.js               # Frontend search, filtering, and rendering logic
+├── scraper.py           # High-speed multi-card Python Playwright scraper
+├── requirements.txt     # Python dependencies
 ├── data/
-│   ├── stores.json      # קובץ הנתונים הראשי בפורמט JSON
-│   └── stores.csv       # קובץ הנתונים בפורמט CSV (מתאים ל-Excel)
-└── README.md            # מדריך והוראות שימוש
+│   ├── stores.json      # Structured JSON catalog (980+ stores, 8 cards)
+│   └── stores.csv       # Excel-compatible CSV catalog
+├── .github/workflows/
+│   └── scrape.yml       # Automated weekly GitHub Actions scraper workflow
+└── README.md            # Documentation and usage guide
 ```
 
 ---
 
-## 🛠️ התקנה והרצת הסורק
+## 🛠️ Scraper Installation & Usage
 
-### 1. התקנת תלויות פייתון
-מומלץ לפתוח סביבה וירטואלית או להתקין ישירות:
+### 1. Prerequisites & Dependencies
+Ensure Python 3.10+ is installed, then install required packages:
+
 ```bash
 pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 2. (אופציונלי) הגדרת Groq API לשיפור קטגוריות ותנאים
-אם ברצונך שמודל ה-LLM של Groq ינקה ויסדר באופן אוטומטי קטגוריות ותנאים מורכבים:
-1. העתק את `.env.example` לקובץ `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. הוסף את המפתח שלך:
-   ```env
-   GROQ_API_KEY=gsk_your_groq_api_key_here
-   ```
+### 2. Run the Scraper
+Run the scraper using your preferred browser (Google Chrome or Microsoft Edge):
 
-### 3. הרצת הסורק
 ```bash
-# הרצה רגילה עם דפדפן פתוח (מומלץ כדי לעקוף את מנגנון Incapsula / WAF בצורה חלקה):
-python scraper.py
+# Using Microsoft Edge (Default on Windows):
+python scraper.py --browser edge
 
-# הרצה במצב Headless:
-python scraper.py --headless
+# Using Google Chrome:
+python scraper.py --browser chrome
+
+# Connect to an already running browser via CDP port:
+python scraper.py --cdp 9222
 ```
 
-הסורק ייכנס לעמוד הכרטיסים הראשי של בהצדעה, יזהה את כל הכרטיסים הזמינים, יסרוק את הרשתות בכל כרטיס, ימזג כפילויות, ויעדכן את `data/stores.json` ו-`data/stores.csv`.
+> **Note on First Run / Authentication:**
+> When running for the first time, a browser window will open. If you are prompted to log in with your Behatsdaa ID & SMS verification code, complete the login once in the window. The session is saved to `./behatsdaa_profile` so subsequent scrapes run completely automatically in ~5 seconds.
 
 ---
 
-## 💻 הרצה ותצוגה מקומית
+## 💻 Local Web Development
 
-כדי לראות את האתר במחשב המקומי שלך, הפעל שרת מקומי מהיר:
+Because the web application is built with standard HTML5, Tailwind CSS, and Vanilla JavaScript (Zero-Build), you can run it locally with any simple HTTP server:
+
 ```bash
 python -m http.server 8000
 ```
-כעת פתח בדפדפן: [http://localhost:8000](http://localhost:8000).
+
+Then open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ---
 
-## 🌐 פרסום האתר ב-GitHub Pages
+## 🌐 Automated Deployment (GitHub Pages)
 
-האתר נבנה כאתר סטטי לחלוטין (Zero-Build) ללא צורך בצעדי בנייה מורכבים:
-
-1. דחוף את השינויים למאגר ה-GitHub שלך:
-   ```bash
-   git add .
-   git commit -m "Update stores catalog and web app"
-   git push origin main
-   ```
-2. גש בהגדרות המאגר ב-GitHub אל:
-   **Settings** -> **Pages**
-3. תחת **Build and deployment**:
-   - **Source**: `Deploy from a branch`
-   - **Branch**: `main` (או `master`), ותיקיית `/ (root)`
-4. לחץ על **Save**. בתוך דקה האתר שלך יהיה זמין באוויר בכתובת:
-   `https://<username>.github.io/stores-list/`
+The repository deploys automatically to GitHub Pages:
+1. Pushing changes to the `main` branch immediately publishes to `https://elonuziel.github.io/stores-list/`.
+2. The site incorporates dynamic cache-busting headers (`no-store` and version timestamps) to ensure visitors always receive the latest stores catalog upon refreshing.
+3. A scheduled GitHub Action (`.github/workflows/scrape.yml`) runs weekly to keep the catalog fresh.
 
 ---
 
-## 📄 רישיון ושימוש
-הפרויקט נבנה לרווחת משתמשי מועדון בהצדעה. הנתונים שייכים לאתר הרשמי של [בהצדעה](https://www.behatsdaa.org.il).
-
+## 📄 License & Attribution
+Created for the benefit of Israeli reserve soldiers (Miluim) and Behatsdaa club beneficiaries. Brand names, logos, and terms are property of [Behatsdaa](https://www.behatsdaa.org.il).

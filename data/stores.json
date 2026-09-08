@@ -2,7 +2,7 @@
   "metadata": {
     "title": "רשימת רשתות מכבדות - כרטיסי בהצדעה",
     "source": "https://www.behatsdaa.org.il/card/chargingCard",
-    "last_updated": "2026-09-08T11:48:42.083811+00:00",
+    "last_updated": "2026-09-08T12:11:53.729860+00:00",
     "total_stores": 987,
     "available_cards": [
       {
@@ -80,20 +80,15 @@
     ],
     "categories": [
       "הכל",
-      "אופנה והנעלה",
       "אופנה ולייף סטייל",
       "אחר",
       "אירוח ונופש",
       "בילוי ופנאי",
-      "בית, חשמל ועיצוב",
       "בריאות וכושר",
       "הכל לבית",
       "יקבים וקולינריה",
-      "מזון, מסעדות ובתי קפה",
       "מסעדות ובתי קפה",
       "ספא וטיפולים משלימים",
-      "פארם, יופי ובריאות",
-      "פנאי, תרבות וספורט",
       "צרכנות",
       "רכישה אונליין",
       "רשתות שיווק מזון ופארמה",
@@ -104,7 +99,7 @@
     {
       "id": "עגליס-אונליין",
       "name": "עגליס אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/160ac079-6fcb-4927-a970-d81c36f533a1.png",
       "website": "https://agalease-baby.co.il/",
       "conditions": "",
@@ -143,7 +138,7 @@
     {
       "id": "vans-online",
       "name": "vans online",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/8b643f6c7839457e98156198f3ad7982.png",
       "website": "https://www.vans.co.il/?utm_source=google&utm_medium=cpc&utm_campaign=shotef_july21&utm_content=brand_exact&gclid=EAIaIQobChMIssOwm-6z9wIVWmpvBB1U7gzFEAAYASAAEgKPffD_BwE",
       "conditions": "",
@@ -189,7 +184,7 @@
     {
       "id": "the-north-face-online",
       "name": "The North Face online",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/2febed53eaf5429d8144e342be768f1b.png",
       "website": "https://thenorthface.co.il/",
       "conditions": "",
@@ -235,7 +230,7 @@
     {
       "id": "altra-online",
       "name": "altra online",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/869516b11a94453bac9be694b58dc6a0.png",
       "website": "https://altrarunning.co.il/?https%3A%2F%2Faltrarunning_co_il%2F%3Futm_source=google&utm_medium=cpc&utm_campaign=brand_exact&gad_source=1&gad_campaignid=22463422772&gbraid=0AAAAACKXZnZtKWpBmyfFHTrd7yBJ_ElVE&gclid=CjwKCAjwpK3SBhASEiwAtV1SPJjA2fRp1IiXDEzFBvekiijSfyuUPY2ZfhmHzjuaCr9UaVNbBDcN4hoCFgkQAvD_BwE",
       "conditions": "",
@@ -281,7 +276,7 @@
     {
       "id": "jansport-online",
       "name": "JANSPORT online",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/c96483ee7d504f9c8aba15298c6a0699.png",
       "website": " https://jansport.co.il/",
       "conditions": "",
@@ -334,7 +329,7 @@
     {
       "id": "נעמן-ורדינון-אונליין",
       "name": "נעמן ורדינון אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/0cd9f40fe984480aaafea8021481ea3d.png",
       "website": "https://www.naamanp.co.il/?gclid=Cj0KCQiAiNnuBRD3ARIsAM8KmlvTjW447Ja8I9aPCeGe8ju-fW_-0zey6gNfT5tFEXvCJZwROpQgP0kaAm7uEALw_wcB",
       "conditions": "",
@@ -373,7 +368,7 @@
     {
       "id": "simmons-online",
       "name": "simmons online",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/eb97ab26e4354e7f92e948021967512b.png",
       "website": "https://simmons.co.il/",
       "conditions": "",
@@ -412,7 +407,7 @@
     {
       "id": "לסטר-אונליין",
       "name": "לסטר אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/990ee2d7-66ef-4eec-a86d-a421b1d92331.jpg",
       "website": "https://www.laster-design.com/",
       "conditions": "",
@@ -451,7 +446,7 @@
     {
       "id": "kuni-online",
       "name": "KUNI online",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/4b857fc25f6c4dc5a8c1e4e7dcad0987.png",
       "website": "https://kuni.co.il/",
       "conditions": "",
@@ -490,7 +485,7 @@
     {
       "id": "אימהות-אונליין",
       "name": "אימהות אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/4c922306e46f4476bc548bb7ab7608be.png",
       "website": "https://imahot-design.com/ ",
       "conditions": "",
@@ -529,7 +524,7 @@
     {
       "id": "oh-my-box",
       "name": "oh my box",
-      "category": "פארם, יופי ובריאות",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/6158e19f-b1d7-42c6-a532-d8df5d744871.png",
       "website": "https://www.ohmybox.co.il/",
       "conditions": "",
@@ -568,7 +563,7 @@
     {
       "id": "תיק-התיקים-אונליין",
       "name": "תיק התיקים אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/a65dbfa69d8e4333a7971dfb0d349f85.jpg",
       "website": "https://tikhatikim.co.il/ ",
       "conditions": "",
@@ -607,7 +602,7 @@
     {
       "id": "caprice-diamonds",
       "name": "caprice diamonds",
-      "category": "פארם, יופי ובריאות",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/93254bdbb61e4a9780f784631c4bd6ef.png",
       "website": "https://he.caprice.co.il/he-il",
       "conditions": "",
@@ -646,7 +641,7 @@
     {
       "id": "מקימי-אונליין",
       "name": "מקימי אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/5df11a13a3bf469d90aa0b46958de6b1.png",
       "website": "https://mekimi.co.il/",
       "conditions": "",
@@ -685,7 +680,7 @@
     {
       "id": "בואנו-קאזה-אונליין",
       "name": "בואנו קאזה אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/a744909bc45d4ddb8e9edaa198a35ddc.png",
       "website": "https://buonacasa.co.il/",
       "conditions": "",
@@ -724,7 +719,7 @@
     {
       "id": "שייקשוק-אונליין",
       "name": "שייקשוק אונליין",
-      "category": "מזון, מסעדות ובתי קפה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/cbe4d79551ea449099df8b9d296057ff.png",
       "website": "https://www.shakeshuk.co.il/",
       "conditions": "",
@@ -763,7 +758,7 @@
     {
       "id": "sweetweet",
       "name": "SWEETWEET",
-      "category": "מזון, מסעדות ובתי קפה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/2a2d8306-e224-4965-8939-2641ff806987.png",
       "website": "https://sweetstore.co.il/",
       "conditions": "",
@@ -802,7 +797,7 @@
     {
       "id": "ג-רוזלם-ננו-בייבל-אונליין",
       "name": "ג'רוזלם ננו בייבל אונליין",
-      "category": "פארם, יופי ובריאות",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/1843d1d20e794adc9bcf48771c3288a6.png",
       "website": "https://jerusalemnanobible.com",
       "conditions": "",
@@ -841,7 +836,7 @@
     {
       "id": "פוד-אפיל-אונליין",
       "name": "פוד אפיל אונליין",
-      "category": "מזון, מסעדות ובתי קפה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/e937c9b7-7cdc-40da-8fa8-35c5d6f61b5c.png",
       "website": "https://www.foodappeal-online.com/",
       "conditions": "",
@@ -880,7 +875,7 @@
     {
       "id": "lee-אונליין",
       "name": "LEE אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/934b5c5a2aa14dffa5ea6d9f2b8dd1b1.png",
       "website": "https://leejeans.co.il/  ",
       "conditions": "",
@@ -919,7 +914,7 @@
     {
       "id": "wrangler-אונליין",
       "name": "Wrangler אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/0e647f03810d48f58f16fc4d9b2e8263.png",
       "website": "https://wranglerjeans.co.il/  ",
       "conditions": "",
@@ -958,7 +953,7 @@
     {
       "id": "new-era-אונליין",
       "name": "NEW ERA אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/c53cd81a8d02489a8b1938f0f0a90383.png",
       "website": "https://neweracap.co.il/",
       "conditions": "",
@@ -997,7 +992,7 @@
     {
       "id": "bumpers-online",
       "name": "bumpers online",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/c6c0955a2dfd4fb5bf3c394570d871e8.png",
       "website": "https://www.bumpersisrael.com/",
       "conditions": "",
@@ -1036,7 +1031,7 @@
     {
       "id": "סינמה-סיטי",
       "name": "סינמה סיטי",
-      "category": "פנאי, תרבות וספורט",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/35ee05f2-4347-40ef-b109-e943a98a51fa.jpg",
       "website": "https://www.cinema-city.co.il/",
       "conditions": "",
@@ -1082,7 +1077,7 @@
     {
       "id": "פוקס-הום-אונליין",
       "name": "פוקס הום אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/1dc72a773b7442a79c2d2fa6c6be9b80.png",
       "website": "https://www.foxhome.co.il/",
       "conditions": "",
@@ -1121,7 +1116,7 @@
     {
       "id": "terminal-x",
       "name": "terminal x",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/e366bcb2-c77a-4781-be9c-05eff2146060.png",
       "website": "https://www.terminalx.com/",
       "conditions": "",
@@ -1160,7 +1155,7 @@
     {
       "id": "נאוטיקה-הום-אונליין",
       "name": "נאוטיקה הום אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/a648b9a6-2a10-4edc-a41d-1d21aa6f8f76.jpg",
       "website": "https://www.nauticahome.co.il",
       "conditions": "",
@@ -1206,7 +1201,7 @@
     {
       "id": "מועדון-הכותנה",
       "name": "מועדון הכותנה",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/58164e70-ae07-4330-8181-233f65819fe3.png",
       "website": "https://cottonclub.co.il/",
       "conditions": "",
@@ -1252,7 +1247,7 @@
     {
       "id": "h-o-און-ליין",
       "name": "H&O און ליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/4ac0dca1-44df-4a6c-a882-c51645da2074.png",
       "website": "http://www.h-o.co.il",
       "conditions": "",
@@ -1298,7 +1293,7 @@
     {
       "id": "מגה-ספורט-אונליין",
       "name": "מגה ספורט אונליין",
-      "category": "פנאי, תרבות וספורט",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/0eb71a18-758f-4c28-a933-bfb3198a4ade.jpg",
       "website": "https://megasport.co.il/",
       "conditions": "",
@@ -1344,7 +1339,7 @@
     {
       "id": "דיל-תאורה-אונליין",
       "name": "דיל תאורה אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/b96e40ab5e2241c78ffd0c037ab578c7.png",
       "website": "https://dealteora.co.il/",
       "conditions": "",
@@ -1383,7 +1378,7 @@
     {
       "id": "מוזה-קוקטיילים-אונליין",
       "name": "מוזה קוקטיילים אונליין",
-      "category": "מזון, מסעדות ובתי קפה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/077b1df2-3d22-4dda-aaef-37d532fa7578.png",
       "website": "https://muzacocktails.co.il",
       "conditions": "",
@@ -1429,7 +1424,7 @@
     {
       "id": "ga-de-אונליין",
       "name": "GA-DE אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/485c950c-95f8-4062-a74f-aa522398ca63.jpg",
       "website": "https://gade.co.il/",
       "conditions": "",
@@ -1468,7 +1463,7 @@
     {
       "id": "carter-s-online",
       "name": "Carter's online",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/6705007d-3c59-4643-bcaf-8419ea4d01a0.jpg",
       "website": "https://www.cartersoshkosh.co.il/",
       "conditions": "",
@@ -1514,7 +1509,7 @@
     {
       "id": "מיננה-אונליין",
       "name": "מיננה אונליין",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/6061e673-bb03-477d-b27f-f0efb3335585.jpg",
       "website": "https://www.minene.net/",
       "conditions": "",
@@ -1560,7 +1555,7 @@
     {
       "id": "קרליין-אונליין",
       "name": "קרליין אונליין",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/48f35707-c8d5-49c5-bade-fefdc4da5cd4.png",
       "website": "https://careline.co.il/ ",
       "conditions": "",
@@ -1599,7 +1594,7 @@
     {
       "id": "שר-ספא-אונליין",
       "name": "שר ספא אונליין",
-      "category": "פארם, יופי ובריאות",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/ffaf5276-7d4e-4f0d-9dcc-9f350463065f.jpg",
       "website": "https://sharespa.co.il/",
       "conditions": "",
@@ -1645,7 +1640,7 @@
     {
       "id": "lenovo",
       "name": "Lenovo",
-      "category": "בית, חשמל ועיצוב",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/45bc6394-a9f0-4455-b607-5382054cd5cb.png",
       "website": "https://www.online-shop.co.il/",
       "conditions": "",
@@ -1684,7 +1679,7 @@
     {
       "id": "פיקניק-אונליין",
       "name": "פיקניק אונליין",
-      "category": "מזון, מסעדות ובתי קפה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/f940acb7-5e9b-422d-b02b-2852f001e530.png",
       "website": "https://picnic.co.il/",
       "conditions": "",
@@ -1723,7 +1718,7 @@
     {
       "id": "atia",
       "name": "ATIA",
-      "category": "אופנה והנעלה",
+      "category": "רכישה אונליין",
       "logo": "https://pics.k4a.co.il/share/NewUploads/BusinessLogo/213bdf2962ae4c439736bbef931e4dd5.png",
       "website": "www.studiolimonada.co.il",
       "conditions": "",
