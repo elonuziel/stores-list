@@ -211,21 +211,24 @@ def launch_stealth_context(p, profile_dir, headless=False, channel=None):
 
 def wait_for_user_login(page):
     """Detect if page redirected to /login and wait for user authentication."""
-    if "/login" in page.url:
+    try:
+        is_login = "/login" in page.url or page.locator("input[type='tel'], input[placeholder*='תעודת'], button:has-text('כניסה')").count() > 0
+    except Exception:
+        is_login = "/login" in page.url
+
+    if is_login:
         print("\n" + "=" * 65)
         print(" [!] ACTION REQUIRED: Behatsdaa Login Needed")
         print("=" * 65)
         print(" Behatsdaa requires logging in to access cards and participating stores.")
-        print(" -> Please log in (ID + SMS code) in the opened Chrome window.")
-        print(" -> The scraper will automatically resume once you are logged in.")
-        print("=" * 65 + "\n")
-
+        print(" -> Enter your ID & SMS code in the opened Chrome/Edge window.")
         try:
-            # Wait up to 3 minutes for user to complete login
-            page.wait_for_url(lambda u: "/login" not in u, timeout=180000)
-            print("[+] Login detected successfully! Resuming scrape...")
+            input(" -> Once you are logged in on screen, press [Enter] here to continue: ")
+            print("[+] Login confirmed! Resuming scraper...")
+            page.wait_for_timeout(2000)
         except Exception:
-            print("[!] Timed out waiting for login. Proceeding with current page...")
+            pass
+        print("=" * 65 + "\n")
 
 
 def extract_stores_from_view(target, intercepted_api_data, wallet_id=None):
@@ -385,7 +388,7 @@ def scrape_with_playwright(args):
         # 1. Navigate to main chargingCard page
         print(f"\n[1/3] Navigating to: {args.card_url}")
         try:
-            page.goto(args.card_url, wait_until="networkidle", timeout=args.timeout)
+            page.goto(args.card_url, wait_until="domcontentloaded", timeout=args.timeout)
         except Exception as e:
             print(f"[*] Navigation note: {e}")
 
@@ -477,7 +480,7 @@ def scrape_with_playwright(args):
             # If not navigated by click, navigate directly to card_url
             if not clicked or "shops" not in page.url:
                 try:
-                    page.goto(card_url, wait_until="networkidle", timeout=args.timeout)
+                    page.goto(card_url, wait_until="domcontentloaded", timeout=args.timeout)
                 except Exception as err:
                     print(f"[*] Navigation note: {err}")
 
@@ -491,7 +494,7 @@ def scrape_with_playwright(args):
             # Return to chargingCard if needed for next card
             if idx < len(card_targets) and "chargingCard" not in page.url:
                 try:
-                    page.goto(args.card_url, wait_until="networkidle", timeout=args.timeout)
+                    page.goto(args.card_url, wait_until="domcontentloaded", timeout=args.timeout)
                     time.sleep(2)
                 except Exception:
                     pass
