@@ -1,0 +1,47 @@
+name: Scrape Stores Catalog
+
+on:
+  workflow_dispatch: # Allows manual trigger from the GitHub "Actions" tab
+  schedule:
+    - cron: '0 6 * * 1' # Runs automatically every Monday at 06:00 UTC
+
+permissions:
+  contents: write # Allows committing updated stores.json and stores.csv
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Run Scraper
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          python scraper.py --headless
+
+      - name: Commit and push updated catalog
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/stores.json data/stores.csv
+          if git diff --staged --quiet; then
+            echo "No changes in stores catalog."
+          else
+            git commit -m "Automated update of stores catalog [skip ci]"
+            git push
+          fi
+
